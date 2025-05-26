@@ -9,14 +9,20 @@ TARGET = aesdsocket
 SRCS = aesdsocket.c
 OBJS = $(SRCS:%.c=%.o)
 
-# Compiler settings
 
-CC = ~/assignment-6/build/tmp/work/cortexa57-poky-linux/aesd-assignments/1.0+gitAUTOINC*/recipe-sysroot-native/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc
+CC = aarch64-poky-linux-gcc
+
+
 #CC = gcc
-SYSROOT := $(shell echo ~/assignment-6/build/tmp/work/cortexa57-poky-linux/aesd-assignments/1.0+gitAUTOINC*/recipe-sysroot)
+SYSROOT := $(wildcard $(HOME)/assignment-6/build/tmp/work/cortexa57-poky-linux/aesd-assignments/1.0+gitAUTOINC*/recipe-sysroot)
 
-CFLAGS += $(TARGET_CC_ARCH) --sysroot=$(SYSROOT)  # Use Yocto's architecture flags
-LDFLAGS += $(TARGET_LDFLAGS)  # Use Yocto's linker flags
+
+
+CFLAGS ?= $(TARGET_CC_ARCH)
+CFLAGS += --sysroot=$(SYSROOT) -pthread -lrt
+
+LDFLAGS ?= $(TARGET_LDFLAGS)
+LDFLAGS += --sysroot=$(SYSROOT) -lgcc -lc
 
 
 
