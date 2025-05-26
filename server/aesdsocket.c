@@ -112,10 +112,13 @@ void cleanup_and_exit(int signum) {
 void *append_timestamp(void *arg) {
     (void)arg;  // Mark argument as unused
 
-    while (1) {
-        sleep(10);  // Wait for 10 seconds
+    while (!shutdown_flag) {  
+        // Instead of sleeping 10 sec at once, check shutdown_flag every 1 sec
+        for (int i = 0; i < 10 && !shutdown_flag; i++) {  
+            sleep(1);
+        }
+        if (shutdown_flag) break;  // Exit immediately if shutdown is requested
 
-        // Get the current time
         time_t now = time(NULL);
         struct tm *tm_info = localtime(&now);
         char time_str[100];
@@ -146,75 +149,59 @@ void *handle_client(void *arg) {
     ssize_t bytes_read;
     char log_msg[128]; // for snprintf
 
-// Lock file access
+
+
+// Read data from client
+while ((bytes_read = recv(client_fd, buffer, sizeof(buffer) - 1, 0)) > 0) {
+    buffer[bytes_read] = '\0';  // Null-terminate received data
+
+    // Acquire mutex before writing to file
     pthread_mutex_lock(&file_mutex);
     
-    // Open the file for appending client data
     int file_fd = open(FILE_PATH, O_RDWR | O_CREAT | O_APPEND, 0666);
     if (file_fd == -1) {
         syslog(LOG_ERR, "Failed to open file");
+        pthread_mutex_unlock(&file_mutex);
         close(client_fd);
-        pthread_mutex_unlock(&file_mutex);  // Unlock before exit
         pthread_exit(NULL);
     }
-    // Read data from client
-    while ((bytes_read = recv(client_fd, buffer, sizeof(buffer) - 1, 0)) > 0) {
-        buffer[bytes_read] = '\0';  // Null-terminate received data
-        char *newline_pos = strchr(buffer, '\n');
-        if (newline_pos) {
-            size_t length_to_write = newline_pos - buffer + 1; // Include '\n'
-            write(file_fd, buffer, length_to_write);
-            break;
-        } else {
-            write(file_fd, buffer, bytes_read);
+
+    write(file_fd, buffer, bytes_read);
+    close(file_fd);
+    
+    pthread_mutex_unlock(&file_mutex);
+
+    // Now, read the whole file and send it back
+    pthread_mutex_lock(&file_mutex);
+    
+    file_fd = open(FILE_PATH, O_RDONLY);
+    if (file_fd != -1) {
+        ssize_t file_bytes;
+        while ((file_bytes = read(file_fd, buffer, sizeof(buffer))) > 0) {
+            send(client_fd, buffer, file_bytes, 0);
+
         }
     }
+
+    pthread_mutex_unlock(&file_mutex);
+}
+
+
     // Handle read errors
     if (bytes_read == -1) {
         syslog(LOG_ERR, "Receive failed: %s", strerror(errno));
     }
-    // Close the file after writing
-    close(file_fd);
-    
-    
-    debug_log("Sending file content now");
-    
-    // Reopen file for reading
-    file_fd = open(FILE_PATH, O_RDONLY);
-    // Now, read the whole file and send it back
-    if (file_fd != -1) {
-        // Move to the beginning of the file before reading
-        lseek(file_fd, 0, SEEK_SET);
-        debug_log("lseek compiled");
-        
-        ssize_t file_bytes;
-        while ((file_bytes = read(file_fd, buffer, sizeof(buffer))) > 0) {
-            ssize_t total_sent = 0;
-    
-            while (total_sent < file_bytes) {  
-                ssize_t bytes_sent = send(client_fd, buffer + total_sent, file_bytes - total_sent, 0);
-        
-                if (bytes_sent == -1) {
-            	   snprintf(log_msg, sizeof(log_msg), "Send failed: %s", strerror(errno));
-            	   debug_log(log_msg);
-                   break;  // Exit loop on failure
-        	}
-        
-        	total_sent += bytes_sent;
-        	snprintf(log_msg, sizeof(log_msg), "Sent %zd/%zd bytes", total_sent, file_bytes);
-        	debug_log(log_msg);
-    	    }
-        }
-        
-        close(file_fd);
-    } else {
-    	debug_log("Failed to open file for reading");
-        syslog(LOG_ERR, "Failed to open file for reading");
-    }
-    
-    // Unclock file access
-    pthread_mutex_unlock(&file_mutex);
-    debug_log("File content sent");
+
+
+ /*   // Send the entire file content back to the client
+    lseek(file_fd, 0, SEEK_SET);
+    while ((bytes_read = read(file_fd, buffer, sizeof(buffer))) > 0) {
+        send(client_fd, buffer, bytes_read, 0);
+    }   */
+
+   // close(file_fd); // Close the file descriptor
+    close(client_fd); // Close the client socket
+
     
     // Remove the thread from the list and free allocated memory
     SLIST_REMOVE(&head, node, thread_node, entries);

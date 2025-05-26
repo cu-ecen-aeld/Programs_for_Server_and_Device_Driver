@@ -1,8 +1,6 @@
 # Makefile for aesdsocket program
 
-# Compiler settings
-CC = gcc
-#CFLAGS = -Wall -Wextra -g
+
 
 # Target executable name
 TARGET = aesdsocket
@@ -12,7 +10,12 @@ SRCS = aesdsocket.c
 OBJS = $(SRCS:%.c=%.o)
 
 # Compiler settings
-#CC ?= $(TARGET_CC)
+
+CC ?= $(TARGET_CC)
+LDFLAGS += $(TARGET_LDFLAGS)
+
+CFLAGS = -Wall -Wextra -g
+
 
 #LD ?= aarch64-poky-linux-ld  
 CFLAGS = -Wall -Wextra -g
@@ -43,7 +46,11 @@ all: $(TARGET)
 # Compile the target binary
 #$(OUT_DIR)/$(TARGET): $(OBJS) | $(OUT_DIR)
 $(TARGET): $(OBJS)
+<<<<<<< HEAD
 	$(CC) $(CFLAGS) -o $@ $^  #$(LDFLAGS)
+=======
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+>>>>>>> a8dac59 (Modified for A6.2 (20))
 
 # Rule to compile .c files into .o files in OUT_DIR
 %.o: %.c
