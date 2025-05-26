@@ -12,7 +12,7 @@ OBJS = $(SRCS:%.c=%.o)
 # Compiler settings
 
 CC ?= $(TARGET_CC)
-LDFLAGS += $(TARGET_LDFLAGS)
+#LDFLAGS += $(TARGET_LDFLAGS)
 
 CFLAGS = -Wall -Wextra -g
 
@@ -40,17 +40,13 @@ CFLAGS = -Wall -Wextra -g
 default: all
 
 # Build target
-#all: $(OUT_DIR)/$(TARGET)
 all: $(TARGET)
 
 # Compile the target binary
-#$(OUT_DIR)/$(TARGET): $(OBJS) | $(OUT_DIR)
 $(TARGET): $(OBJS)
-<<<<<<< HEAD
-	$(CC) $(CFLAGS) -o $@ $^  #$(LDFLAGS)
-=======
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
->>>>>>> a8dac59 (Modified for A6.2 (20))
+
+	$(CC) $(CFLAGS) -o $@ $^ 
+
 
 # Rule to compile .c files into .o files in OUT_DIR
 %.o: %.c
