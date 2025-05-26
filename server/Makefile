@@ -11,10 +11,13 @@ OBJS = $(SRCS:%.c=%.o)
 
 # Compiler settings
 
-CC ?= aarch64-poky-linux-gcc
-# Use the correct compiler flags from Yocto
-CFLAGS += -Wall -Wextra -g $(TARGET_CC_ARCH)
-LDFLAGS += $(TARGET_LDFLAGS)
+CC = ~/assignment-6/build/tmp/work/cortexa57-poky-linux/aesd-assignments/1.0+gitAUTOINC*/recipe-sysroot-native/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc
+#CC = gcc
+SYSROOT := $(shell echo ~/assignment-6/build/tmp/work/cortexa57-poky-linux/aesd-assignments/1.0+gitAUTOINC*/recipe-sysroot)
+
+CFLAGS += $(TARGET_CC_ARCH) --sysroot=$(SYSROOT)  # Use Yocto's architecture flags
+LDFLAGS += $(TARGET_LDFLAGS)  # Use Yocto's linker flags
+
 
 
 #LD ?= aarch64-poky-linux-ld  
@@ -46,7 +49,6 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
 
 # Rule to compile .c files into .o files in OUT_DIR
 %.o: %.c
