@@ -30,25 +30,6 @@ else
 endif
 
 
-#LD ?= aarch64-poky-linux-ld  
-CFLAGS = -Wall -Wextra -g
-#LDFLAGS += $(TARGET_LDFLAGS)
- 
-
-# Cross-compilation setup
-#ifeq ($(CROSS_COMPILE),)
-	# If no cross-compiler specified, use the native compiler
-#	CC = gcc
-#	LD = ld
-#else
-	# Cross-compilation setup: use the specified cross-compiler prefix
-#	CC = $(CROSS_COMPILE)gcc
-#	LD = $(CROSS_COMPILE)ld
-#endif
-
-# Output directory
-#OUT_DIR := ./server
-
 # Default target
 default: all
 
