@@ -109,8 +109,8 @@ if [ -d "/home/raj_u22/assignment-1-Raj-097/arm-gnu-toolchain/" ]; then
   
 else
 	echo "GitHub runner"
-	cp /__w/assignments-3-and-later-Raj-097/assignments-3-and-later-Raj-097/arm-gnu-toolchain/ld-linux-aarch64.so.1 ${OUTDIR}/rootfs/lib/
-	cp /__w/assignments-3-and-later-Raj-097/assignments-3-and-later-Raj-097/arm-gnu-toolchain/libm.so.6 /__w/assignments-3-and-later-Raj-097/assignments-3-and-later-Raj-097/arm-gnu-toolchain/libresolv.so.2 /__w/assignments-3-and-later-Raj-097/assignments-3-and-later-Raj-097/arm-gnu-toolchain/libc.so.6 ${OUTDIR}/rootfs/lib64/
+	cp /__w/Programs_for_Server_and_Device_Driver/Programs_for_Server_and_Device_Driver/arm-gnu-toolchain/ld-linux-aarch64.so.1 ${OUTDIR}/rootfs/lib/
+	cp /__w/Programs_for_Server_and_Device_Driver/Programs_for_Server_and_Device_Driver/arm-gnu-toolchain/libm.so.6 /__w/Programs_for_Server_and_Device_Driver/Programs_for_Server_and_Device_Driver/arm-gnu-toolchain/libresolv.so.2 /__w/aPrograms_for_Server_and_Device_Driver/Programs_for_Server_and_Device_Driver/arm-gnu-toolchain/libc.so.6 ${OUTDIR}/rootfs/lib64/
  
 fi
 
