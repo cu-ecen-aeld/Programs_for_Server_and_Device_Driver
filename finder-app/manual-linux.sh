@@ -129,7 +129,7 @@ if [ -d "/home/raj_u22/assignment-1-Raj-097/finder-app" ]; then
 	
 else
 	echo "GitHub Runner"
-	cd /__w/assignments-3-and-later-Raj-097/assignments-3-and-later-Raj-097/finder-app
+	cd /__w/Programs_for_Server_and_Device_Driver/Programs_for_Server_and_Device_Driver/finder-app
 	make clean
 	make CROSS_COMPILE=${CROSS_COMPILE} all
 fi
