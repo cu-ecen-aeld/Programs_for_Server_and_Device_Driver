@@ -2,7 +2,7 @@
 
 USE_AESD_CHAR_DEVICE ?= 1
 
-
+HOST ?= 1
 # Target executable name
 TARGET = aesdsocket
 
