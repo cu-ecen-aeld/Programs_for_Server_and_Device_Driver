@@ -17,8 +17,8 @@ ifeq ($(HOST),1)
     CC = gcc
     SYSROOT =
     CFLAGS += -Wall -Wextra -O2 -g -pthread -lrt
-    CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
-    CFLAGS += -I../aesd-char-driver
+    #CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
+    #CFLAGS += -I../aesd-char-driver
     LDFLAGS :=
 else
     CC = aarch64-poky-linux-gcc
