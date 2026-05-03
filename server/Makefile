@@ -2,7 +2,6 @@
 
 USE_AESD_CHAR_DEVICE ?= 1
 
-HOST ?= 1
 # Target executable name
 TARGET = aesdsocket
 
@@ -17,7 +16,7 @@ ifeq ($(HOST),1)
     CC = gcc
     SYSROOT =
     CFLAGS += -Wall -Wextra -O2 -g -pthread -lrt
-    #CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
+    CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
     CFLAGS += -I../aesd-char-driver
     LDFLAGS :=
 else
@@ -25,7 +24,7 @@ else
     SYSROOT ?= /
     CFLAGS ?= $(TARGET_CC_ARCH)
     CFLAGS += --sysroot=$(SYSROOT) -pthread -lrt
-    CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
+    #CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
     CFLAGS += -I../aesd-char-driver
     LDFLAGS ?= $(TARGET_LDFLAGS)
     LDFLAGS += --sysroot=$(SYSROOT) -lgcc -lc
