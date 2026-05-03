@@ -14,8 +14,8 @@
 #include <sys/queue.h> // Singly linked list
 #include <time.h>
 
-#include <sys/ioctl.h>
-#include "aesd_ioctl.h"
+/#include <sys/ioctl.h>
+//#include "aesd_ioctl.h"
 
 
 #define PORT "9000" // Port number to listen on
