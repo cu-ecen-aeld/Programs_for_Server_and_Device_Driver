@@ -14,7 +14,7 @@
 #include <sys/queue.h> // Singly linked list
 #include <time.h>
 
-/#include <sys/ioctl.h>
+//#include <sys/ioctl.h>
 //#include "aesd_ioctl.h"
 
 
