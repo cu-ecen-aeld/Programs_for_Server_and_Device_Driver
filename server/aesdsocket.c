@@ -20,6 +20,7 @@
 
 #define PORT "9000" // Port number to listen on
 #define BACKLOG 10   // Maximum number of pending connections in the queue
+#define DEBUG_LOG_FILE "/tmp/aesdsocket.log"
 
 #if USE_AESD_CHAR_DEVICE
     const char *FILE_PATH = "/dev/aesdchar";
@@ -81,6 +82,7 @@ void daemonize() {
     stdout = fopen("/dev/null", "w");
     stderr = fopen("/dev/null", "w");
 }
+
 
 void debug_log(const char *message) {
     FILE *file = fopen(DEBUG_LOG_FILE, "a");
