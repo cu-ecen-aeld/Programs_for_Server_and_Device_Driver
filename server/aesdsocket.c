@@ -359,13 +359,12 @@ int main(int argc, char *argv[])
     pthread_mutex_init(&file_mutex, NULL);
     
     
-<<<<<<< HEAD
-=======
+
     #if !USE_AESD_CHAR_DEVICE
         // Create and start the timestamp thread
         pthread_create(&timestamp_thread, NULL, append_timestamp, NULL);
     #endif
->>>>>>> 51ca793 (Full-test completed with success for A8)
+
 
     // Start listening for incoming client connections
     if (listen(server_fd, BACKLOG) == -1) {
