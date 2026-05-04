@@ -97,28 +97,6 @@ void debug_log(const char *message) {
 void cleanup_and_exit(int signum) {
     syslog(LOG_INFO, "Caught signal %d, exiting", signum);
     shutdown_flag = 1; // Set shutdown flag
-    close(server_fd); // Close server socket
-    
-    // Wait for the timestamp thread to finish execution before exiting
-    pthread_join(timestamp_thread, NULL);
-    
-    // Join all active client threads before exiting to ensure graceful shutdown
-    thread_node_t *node;
-    while (!SLIST_EMPTY(&head)) {
-        node = SLIST_FIRST(&head);
-        pthread_join(node->thread_id, NULL);
-        SLIST_REMOVE_HEAD(&head, entries);
-        free(node);
-    }
-    #if !USE_AESD_CHAR_DEVICE
-         unlink(FILE_PATH); // Remove the temporary file upon exit
-    #endif
-    
-
-    pthread_mutex_destroy(&file_mutex); // Destroy the mutex to prevent memory leaks
-    closelog(); // Close syslog
-    debug_log("aesdsocket exiting.");
-    exit(0);
 }
 
 void *append_timestamp(void *arg) {
@@ -360,13 +338,6 @@ int main(int argc, char *argv[])
     // Initialize mutex before starting any thread
     pthread_mutex_init(&file_mutex, NULL);
     
-    
-
-    /* #if !USE_AESD_CHAR_DEVICE
-        // Create and start the timestamp thread
-        pthread_create(&timestamp_thread, NULL, append_timestamp, NULL);
-    #endif */
-
 
     // Start listening for incoming client connections
     if (listen(server_fd, BACKLOG) == -1) {
@@ -392,6 +363,11 @@ int main(int argc, char *argv[])
             timestamps_started = 1;
         }  */
         
+        #if !USE_AESD_CHAR_DEVICE
+        // Create and start the timestamp thread
+        	pthread_create(&timestamp_thread, NULL, append_timestamp, NULL);
+    	#endif */
+        
         node = malloc(sizeof(thread_node_t));
         if (!node) {
             syslog(LOG_ERR, "Memory allocation for cleint node failed");
@@ -405,5 +381,26 @@ int main(int argc, char *argv[])
         pthread_create(&node->thread_id, NULL, handle_client, node);
    }
 
-   cleanup_and_exit(0);
+   close(server_fd); // Close server socket
+    
+    // Wait for the timestamp thread to finish execution before exiting
+    pthread_join(timestamp_thread, NULL);
+    
+    // Join all active client threads before exiting to ensure graceful shutdown
+    thread_node_t *node;
+    while (!SLIST_EMPTY(&head)) {
+        node = SLIST_FIRST(&head);
+        pthread_join(node->thread_id, NULL);
+        SLIST_REMOVE_HEAD(&head, entries);
+        free(node);
+    }
+    #if !USE_AESD_CHAR_DEVICE
+         unlink(FILE_PATH); // Remove the temporary file upon exit
+    #endif
+    
+
+    pthread_mutex_destroy(&file_mutex); // Destroy the mutex to prevent memory leaks
+    closelog(); // Close syslog
+    debug_log("aesdsocket exiting.");
+    exit(0);
 }
