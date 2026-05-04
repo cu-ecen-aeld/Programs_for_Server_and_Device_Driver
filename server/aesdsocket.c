@@ -386,11 +386,11 @@ int main(int argc, char *argv[])
         }
         debug_log("Client connected");
         
-        // Start timestamp thread only after the first client connection
+   /*     // Start timestamp thread only after the first client connection
         if (!timestamps_started) {
             pthread_create(&timestamp_thread, NULL, append_timestamp, NULL);
             timestamps_started = 1;
-        }
+        }  */
         
         node = malloc(sizeof(thread_node_t));
         if (!node) {
