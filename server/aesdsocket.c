@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
     pthread_join(timestamp_thread, NULL);
     
     // Join all active client threads before exiting to ensure graceful shutdown
-    thread_node_t *node;
+    
     while (!SLIST_EMPTY(&head)) {
         node = SLIST_FIRST(&head);
         pthread_join(node->thread_id, NULL);
