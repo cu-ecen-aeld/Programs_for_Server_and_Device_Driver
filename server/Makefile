@@ -1,5 +1,5 @@
 # Makefile for aesdsocket program
-HOST ?= 1
+#HOST ?= 1
 #USE_AESD_CHAR_DEVICE ?= 1
 
 # Target executable name
