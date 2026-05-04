@@ -362,10 +362,10 @@ int main(int argc, char *argv[])
     
     
 
-    #if !USE_AESD_CHAR_DEVICE
+    /* #if !USE_AESD_CHAR_DEVICE
         // Create and start the timestamp thread
         pthread_create(&timestamp_thread, NULL, append_timestamp, NULL);
-    #endif
+    #endif */
 
 
     // Start listening for incoming client connections
