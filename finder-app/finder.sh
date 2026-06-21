@@ -1,5 +1,20 @@
 #!/bin/sh
 
+#------------------------------------------------------------------------------
+# finder.sh
+#
+# Searches a directory tree for files containing a specified string.
+#
+# Recursively counts the total number of files under the given directory and
+# determines how many lines contain the specified search string. Results are
+# reported in the format required by the assignment test framework.
+#
+# Usage:
+#   ./finder.sh <filesdir> <searchstr>
+#
+# Author: Rajkumar Saravanakumar
+#------------------------------------------------------------------------------
+
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 2 ]; then
     echo "Error: Missing arguments."

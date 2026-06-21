@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# File: aesdchar_unload
+# Description:
+#   Unloads the AESD character device driver and removes the
+#   associated device node from /dev.
+#
+# Usage:
+#   aesdchar_unload
+#
+# Author:
+#   Rajkumar Saravanakumar
+#
+
+module=aesdchar
+device=aesdchar
+cd `dirname $0`
+# invoke rmmod with all arguments we got
+rmmod $module || exit 1
+
+# Remove stale nodes
+
+rm -f /dev/${device}

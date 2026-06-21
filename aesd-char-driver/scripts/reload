@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# File: reload
+# Description:
+#   Reloads the AESD character device driver by unloading and
+#   reloading the kernel module.
+#
+# Usage:
+#   reload
+#
+# Author:
+#   Rajkumar Saravanakumar
+#
+
+./aesdchar_unload
+
+sleep 1
+
+./aesdchar_load
+
+

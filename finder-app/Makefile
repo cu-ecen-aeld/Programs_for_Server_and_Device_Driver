@@ -1,3 +1,20 @@
+#------------------------------------------------------------------------------
+# Makefile
+#
+# Build configuration for the writer application, which creates any
+# required directories and writes a specified string to a file.
+#
+# Supports native compilation and cross-compilation through the
+# CROSS_COMPILE prefix.
+#
+# Usage:
+#   make                  Build the writer executable
+#   make clean            Remove generated files
+#   make CROSS_COMPILE=<toolchain-prefix>
+#
+# Author: Rajkumar Saravanakumar
+#------------------------------------------------------------------------------
+
 # Set default values for CC and LD (native compiler)
 CC = gcc
 
@@ -8,10 +25,10 @@ CFLAGS = -Wall -g
 TARGET = writer
 
 # Object files
-OBJECTS = writer.o
+OBJECTS = source/writer.o
 
 # Source files
-SOURCES = writer.c
+SOURCES = source/writer.c
 
 # Cross-compilation setup
 ifeq ($(CROSS_COMPILE),)
@@ -41,5 +58,5 @@ $(TARGET): $(OBJECTS)
 clean:
 	rm -f $(TARGET) $(OBJECTS)
 
-.PHONY: app clean 
+.PHONY: all clean 
 

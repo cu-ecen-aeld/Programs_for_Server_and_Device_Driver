@@ -1,5 +1,23 @@
 #!/bin/sh
 
+#------------------------------------------------------------------------------
+# aesdsocket-start-stop.sh
+#
+# Init script for managing the aesdsocket daemon.
+#
+# Provides commands to start, stop, restart, and query the status of the
+# aesdsocket server. The daemon is launched in background mode and managed
+# through a PID file located in /var/run.
+#
+# Usage:
+#   ./aesdsocket-start-stop.sh start
+#   ./aesdsocket-start-stop.sh stop
+#   ./aesdsocket-start-stop.sh restart
+#   ./aesdsocket-start-stop.sh status
+#
+# Author: Rajkumar Saravanakumar
+#------------------------------------------------------------------------------
+
 ### BEGIN INIT INFO
 # Provides:          aesdsocket
 # Required-Start:    $remote_fs $syslog

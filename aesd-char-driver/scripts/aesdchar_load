@@ -1,4 +1,19 @@
 #!/bin/sh
+#
+# File: aesdchar_load
+# Description:
+#   Loads the AESD character device driver and creates the associated
+#   device node under /dev. If a locally built module is available,
+#   it is inserted directly; otherwise, the script falls back to
+#   loading the module using modprobe.
+#
+# Usage:
+#   aesdchar_load [module_parameters]
+#
+# Author:
+#   Rajkumar Saravanakumar
+#
+
 module=aesdchar
 device=aesdchar
 mode="664"

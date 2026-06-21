@@ -1,10 +1,12 @@
-/*
- * aesd_ioctl.h
+/**
+ * @file aesd_ioctl.h
+ * @brief Definitions for ioctl commands supported by the AESD character driver.
  *
- *  Created on: Oct 23, 2019
- *      Author: Dan Walkes
- *
- *  @brief Definitins for the ioctl used on aesd char devices for assignment 9
+ * Defines the data structures and ioctl command codes used for
+ * communication between user space applications and the AESD
+ * character device.
+ * 
+ * @author Rajkumar Saravanakumar
  */
 
 #ifndef AESD_IOCTL_H
@@ -14,13 +16,15 @@
 #include <asm-generic/ioctl.h>
 #include <linux/types.h>
 #else
-#include <sys/ioctl.h>
 #include <stdint.h>
+#include <sys/ioctl.h>
 #endif
 
 /**
- * A structure to be passed by IOCTL from user space to kernel space, describing the type
- * of seek performed on the aesdchar driver
+ * @brief Parameters used by the AESDCHAR_IOCSEEKTO ioctl command.
+ *
+ * Describes a seek position as a write command index and an offset
+ * within that command.
  */
 struct aesd_seekto {
     /**
@@ -38,8 +42,11 @@ struct aesd_seekto {
 
 // Define a write command from the user point of view, use command number 1
 #define AESDCHAR_IOCSEEKTO _IOWR(AESD_IOC_MAGIC, 1, struct aesd_seekto)
+
 /**
- * The maximum number of commands supported, used for bounds checking
+ * @brief Maximum number of ioctl commands supported.
+ *
+ * Used for ioctl command validation and bounds checking.
  */
 #define AESDCHAR_IOC_MAXNR 1
 

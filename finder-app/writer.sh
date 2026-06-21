@@ -1,5 +1,19 @@
 #!/bin/bash
 
+#------------------------------------------------------------------------------
+# writer.sh
+#
+# Creates the required directory path and writes a string to a file.
+#
+# Ensures that any missing parent directories are created before writing the
+# specified string to the target file. Existing file contents are overwritten.
+#
+# Usage:
+#   ./writer.sh <writefile> <writestr>
+#
+# Author: Rajkumar Saravanakumar
+#------------------------------------------------------------------------------
+
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 2 ]; then
     echo "Error: Missing arguments."

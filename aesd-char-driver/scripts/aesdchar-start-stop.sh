@@ -1,4 +1,18 @@
 #!/bin/sh
+#
+# File: aesdchar-start-stop.sh
+# Description:
+#   SysV init script for managing the AESD character device driver.
+#   Provides start, stop, and restart operations by invoking the
+#   corresponding module load and unload utilities.
+#
+# Usage:
+#   aesdchar-start-stop {start|stop|restart}
+#
+# Author:
+#   Rajkumar Saravanakumar
+#
+
 ### BEGIN INIT INFO
 # Provides:          aesdchar
 # Required-Start:    $local_fs
