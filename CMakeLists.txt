@@ -16,6 +16,6 @@ set(AUTOTEST_SOURCES
 # A list of all files containing test code that is used for assignment validation
 set(TESTED_SOURCE
     ../examples/autotest-validate/autotest-validate.c
-    ../aesd-char-driver/source/aesd-circular-buffer.c
+    ../aesd-char-driver/aesd-circular-buffer.c
 )
 add_subdirectory(assignment-autotest)

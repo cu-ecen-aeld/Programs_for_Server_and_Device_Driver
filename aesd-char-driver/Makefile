@@ -29,9 +29,7 @@ EXTRA_CFLAGS += $(DEBFLAGS)
 ifneq ($(KERNELRELEASE),)  # Call from kernel build system
 
 obj-m	:= aesdchar.o
-aesdchar-y := source/aesd-circular-buffer.o source/main.o # .c files to compile and link into aesdchar.ko
-
-ccflags-y += -I$(src)/include
+aesdchar-y := aesd-circular-buffer.o main.o # .c files to compile and link into aesdchar.ko
 
 else  # Call from current directory
 
@@ -46,5 +44,5 @@ modules:
 endif
 
 clean:
-	rm -rf source/*.o *~ core .depend source/.*.cmd *.ko *.mod.c .tmp_versions
+	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions
 
