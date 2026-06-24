@@ -41,7 +41,7 @@ ifeq ($(HOST),1)
     SYSROOT =
     CFLAGS += -Wall -Wextra -O2 -g -pthread -lrt
     #CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
-    CFLAGS += -Iinclude -I../aesd-char-driver
+    CPPFLAGS += -Iinclude -I../aesd-char-driver
     LDFLAGS :=
 else
     CC = aarch64-poky-linux-gcc
@@ -49,7 +49,7 @@ else
     CFLAGS ?= $(TARGET_CC_ARCH)
     CFLAGS += --sysroot=$(SYSROOT) -pthread -lrt
     CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
-    CFLAGS += -Iinclude -I../aesd-char-driver
+    CPPFLAGS += -Iinclude -I../aesd-char-driver
     LDFLAGS ?= $(TARGET_LDFLAGS)
     LDFLAGS += --sysroot=$(SYSROOT) -lgcc -lc
 endif
@@ -62,11 +62,11 @@ all: $(TARGET)
 
 # Compile the target binary
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Rule to compile .c files into .o files in OUT_DIR
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 # Clean up build artifacts
 clean:
