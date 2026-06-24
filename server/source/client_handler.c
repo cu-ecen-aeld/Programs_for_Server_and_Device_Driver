@@ -19,7 +19,7 @@
 #include <syslog.h>
 #include <unistd.h>
 
-#include "../aesd-char-driver/aesd_ioctl.h"
+#include "aesd_ioctl.h"
 #include "client_handler.h"
 #include "globals.h"
 
