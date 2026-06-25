@@ -84,6 +84,10 @@ int server_init(int daemon_mode) {
 }
 
 void server_run(void) {
+    socklen_t client_addr_len;
+    struct sockaddr_storage client_addr;
+    thread_node_t* node;
+
     while (!shutdown_flag) {
         client_addr_len = sizeof(client_addr);
 
@@ -101,7 +105,7 @@ void server_run(void) {
 #if !USE_AESD_CHAR_DEVICE
         // Create and start the timestamp thread
         pthread_create(&timestamp_thread, NULL, append_timestamp, NULL);
-#endif* /
+#endif
 
         node = malloc(sizeof(thread_node_t));
         if (!node) {

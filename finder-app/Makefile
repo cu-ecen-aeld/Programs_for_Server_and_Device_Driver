@@ -15,7 +15,7 @@
 # Author: Rajkumar Saravanakumar
 #------------------------------------------------------------------------------
 
-# Set default values for CC and LD (native compiler)
+# Set default values for CC (native compiler)
 CC = gcc
 
 # Compiler flags
@@ -34,11 +34,9 @@ SOURCES = source/writer.c
 ifeq ($(CROSS_COMPILE),)
 	# If no cross-compiler specified, use the native compiler
 	CC = gcc
-	LD = ld
 else
 	# Cross-compilation setup: use the specified cross-compiler prefix
 	CC = $(CROSS_COMPILE)gcc
-	LD = $(CROSS_COMPILE)ld
 endif
 
 

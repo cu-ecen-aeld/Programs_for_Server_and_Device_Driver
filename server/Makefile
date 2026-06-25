@@ -36,22 +36,26 @@ SRCS = source/main.c \
 
 OBJS = $(SRCS:%.c=%.o)
 
+CPPFLAGS += -Iinclude -I../aesd-char-driver
+
 ifeq ($(HOST),1)
     CC = gcc
-    SYSROOT =
+    
     CFLAGS += -Wall -Wextra -O2 -g -pthread -lrt
-    #CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
+    
+    #CPPFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
     CPPFLAGS += -Iinclude -I../aesd-char-driver
-    LDFLAGS :=
+
 else
-    CC = aarch64-poky-linux-gcc
-    SYSROOT ?= /
-    CFLAGS ?= $(TARGET_CC_ARCH)
-    CFLAGS += --sysroot=$(SYSROOT) -pthread -lrt
-    CFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
-    CPPFLAGS += -Iinclude -I../aesd-char-driver
-    LDFLAGS ?= $(TARGET_LDFLAGS)
-    LDFLAGS += --sysroot=$(SYSROOT) -lgcc -lc
+    # For standalone cross-compilation.
+    # Yocto and Buildroot override these variables externally.
+    CC ?= aarch64-none-linux-gnu-gcc
+
+    CFLAGS += -Wall -Wextra -pthread
+    
+    CPPFLAGS += -DUSE_AESD_CHAR_DEVICE=$(USE_AESD_CHAR_DEVICE)
+    
+    LDFLAGS += -pthread
 endif
 
 # Default target

@@ -16,12 +16,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/ioctl.h>
+#include <sys/socket.h>
 #include <syslog.h>
 #include <unistd.h>
 
 #include "aesd_ioctl.h"
 #include "client_handler.h"
 #include "globals.h"
+#include "debug.h"
 
 void* handle_client(void* arg) {
     debug_log("Changes are reflected in the build");

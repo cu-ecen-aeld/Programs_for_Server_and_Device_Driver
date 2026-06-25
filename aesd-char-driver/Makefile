@@ -33,8 +33,13 @@ aesdchar-y := aesd-circular-buffer.o main.o # .c files to compile and link into 
 
 else  # Call from current directory
 
-KERNELDIR ?= $(KERNEL_SRC)  # remove for native compilation
-#KERNELDIR ?= /lib/modules/$(shell uname -r)/build  #remove for cross compilation
+KERNELDIR ?= $(KERNEL_SRC) 
+# Native compilation:
+# KERNEL_SRC = /lib/modules/$(shell uname -r)/build
+#
+# Cross compilation:
+# KERNEL_SRC should point to the target kernel source/build tree
+# (e.g. Yocto: ${STAGING_KERNEL_DIR}, Buildroot: $(LINUX_DIR))
 
 PWD       := $(shell pwd)
 

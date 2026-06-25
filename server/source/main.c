@@ -11,9 +11,12 @@
 
 #include <stdlib.h>
 #include <syslog.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "server.h"
 #include "signal_handler.h"
+#include "debug.h"
 
 int main(int argc, char* argv[]) {
     const char* filepath = "/var/tmp/aesdsocketdata";
