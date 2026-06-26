@@ -127,9 +127,10 @@ void server_cleanup(void) {
 
     close(server_fd);  // Close server socket
 
+#if !USE_AESD_CHAR_DEVICE
     // Wait for the timestamp thread to finish execution before exiting
     pthread_join(timestamp_thread, NULL);
-
+#endif
     // Join and free all active client threads before exiting to ensure graceful shutdown
     while (!SLIST_EMPTY(&head)) {
         node = SLIST_FIRST(&head);

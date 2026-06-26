@@ -17,8 +17,10 @@
 # Author: Rajkumar Saravanakumar
 #------------------------------------------------------------------------------
 
-
+# Host platform
 #HOST ?= 1
+
+# AESD Character device usage
 USE_AESD_CHAR_DEVICE ?= 1
 
 # Target executable name
